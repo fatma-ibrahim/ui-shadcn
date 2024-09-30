@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { RadioGroup } from "../ui/radio-group";
 import emailjs from "emailjs-com";
 
 const FormPage = () => {
+  const [selectedOption, setSelectedOption] = useState("target-weight");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -34,7 +34,7 @@ const FormPage = () => {
       gender: formData.gender,
       message: formData.message,
       url: formData.url,
-      file: formData.file ? formData.file.name : "", 
+      file: formData.file ? formData.file.name : "",
       country: formData.country,
     };
 
@@ -42,9 +42,9 @@ const FormPage = () => {
 
     emailjs
       .send(
-        "service_c03vdwj", 
-        "template_ywdy8jp", 
-        templateParams, 
+        "service_c03vdwj",
+        "template_ywdy8jp",
+        templateParams,
         "JffZZVT3QDJma3QWw"
       )
       .then(() => {
@@ -82,35 +82,106 @@ const FormPage = () => {
       </div>
 
       <div className="mt-5">
-        <Label>Gender</Label>
-        <RadioGroup name="gender" className="flex space-x-4 mt-1">
-          <div className="flex items-center">
-            <Input
-              id="male"
-              name="gender"
-              type="radio"
-              value="Male"
-              checked={formData.gender === "Male"}
-              onChange={handleChange}
-            />
-            <Label htmlFor="male" className="ml-2">
-              Male
-            </Label>
+        <h1 className="font-bold">Lose or Gain Weight</h1>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">
+            Current Weight:
+          </label>
+          <input
+            type="number"
+            name="currentWeight"
+            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+          />
+        </div>
+
+        <div className="flex space-x-4 mb-4">
+          <div className="bg-gray-100 p-4 rounded-lg shadow-lg w-1/2">
+            <div className="flex items-center">
+              <input
+                type="radio"
+                id="target-weight"
+                name="option"
+                value="target-weight"
+                checked={selectedOption === "target-weight"}
+                onChange={() => setSelectedOption("target-weight")}
+                className="mr-2"
+              />
+              <label
+                htmlFor="target-weight"
+                className="text-sm font-medium text-gray-700"
+              >
+                Target Weight in duration
+              </label>
+            </div>
+            <div className="mt-2">
+              <div className="mb-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Target Weight:
+                </label>
+                <input
+                  type="number"
+                  name="targetWeight"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Duration:
+                </label>
+                <input
+                  type="number"
+                  name="duration"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex items-center">
-            <Input
-              id="female"
-              name="gender"
-              type="radio"
-              value="Female"
-              checked={formData.gender === "Female"}
-              onChange={handleChange}
-            />
-            <Label htmlFor="female" className="ml-2">
-              Female
-            </Label>
+
+          <div className="bg-gray-100 p-4 rounded-lg shadow-lg w-1/2">
+            <div className="flex items-center">
+              <input
+                type="radio"
+                id="weight-duration"
+                name="option"
+                value="weight-duration"
+                checked={selectedOption === "weight-duration"}
+                onChange={() => setSelectedOption("weight-duration")}
+                className="mr-2"
+              />
+              <label
+                htmlFor="weight-duration"
+                className="text-sm font-medium text-gray-700"
+              >
+                Weight to be lost in the duration
+              </label>
+            </div>
+            <div className="mt-2">
+              <div className="mb-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Weight/Duration:
+                </label>
+                <input
+                  type="number"
+                  name="duration"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Duration:
+                </label>
+                <select
+                  name="weightDuration"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                >
+                  <option value="week">Week</option>
+                  <option value="month">Month</option>
+                </select>
+              </div>
+            </div>
           </div>
-        </RadioGroup>
+        </div>
       </div>
 
       <div className="mt-5">
